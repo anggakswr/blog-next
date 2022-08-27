@@ -6,6 +6,10 @@ body {
   @apply bg-black;
 }
 
+.box-equal {
+  @apply flex items-center;
+}
+
 .box-center {
   @apply flex items-center justify-center;
 }

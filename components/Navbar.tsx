@@ -19,11 +19,10 @@ const Navbar = () => {
         </a>
       </div>
 
-      <div className="p-2">
+      <form className="p-2" onSubmit={(e) => e.preventDefault()}>
         <input type="text" placeholder="Search here" className="bg-white p-2" />
-
         <button className="bg-blue-500 text-white p-2">Search</button>
-      </div>
+      </form>
     </nav>
   );
 };
