@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Post = () => {
   return (
     <div className="box-equal gap-x-4 mb-8">
@@ -17,12 +19,11 @@ const Post = () => {
         </small>
 
         {/* title (link) */}
-        <a
-          href="#"
-          className="text-xl font-semibold block my-2 hover:text-blue-500"
-        >
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </a>
+        <Link href="/post/post-pertama">
+          <a className="text-xl font-semibold block my-2 hover:text-blue-500">
+            Lorem ipsum dolor sit amet consectetur adipisicing
+          </a>
+        </Link>
 
         {/* desc */}
         <p className="text-gray-500 text-sm">

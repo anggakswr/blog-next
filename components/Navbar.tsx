@@ -1,10 +1,17 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 const Navbar = () => {
+  const { pathname } = useRouter();
+  const active = "p-4 bg-black text-white";
+  const notActive = "p-4 hover:bg-black hover:text-white";
+
   return (
     <nav className="box-between bg-gray-300">
       <div className="flex">
-        <a href="#" className="p-4 hover:bg-black hover:text-white">
-          Home
-        </a>
+        <Link href="/">
+          <a className={pathname === "/" ? active : notActive}>Home</a>
+        </Link>
 
         <a href="#" className="p-4 hover:bg-black hover:text-white">
           Text
