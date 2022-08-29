@@ -4,12 +4,17 @@ import Header from "components/Header";
 import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
 import BlueBox from "components/BlueBox";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const currentYear = new Date().getFullYear();
 
   return (
     <div className="w-[1024px] mx-auto bg-white">
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Header />
       <Navbar />
 

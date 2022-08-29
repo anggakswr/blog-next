@@ -1,12 +1,29 @@
+import axios from "axios";
 import Post from "components/index/Post";
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 
-const Home: NextPage = () => {
+export type PostType = {
+  id: number;
+  title: string;
+  body: string;
+};
+
+type HomePropType = {
+  posts: PostType[];
+};
+
+const Home: NextPage<HomePropType> = ({ posts }) => {
   return (
     <>
-      <Post />
-      <Post />
-      <Post />
+      <Head>
+        <title>Home | Blognya Angga</title>
+        <meta name="description" content="Isinya tentang Angga" />
+      </Head>
+
+      {posts.map((post: PostType) => (
+        <Post key={"post-in-index-" + post.id} post={post} />
+      ))}
 
       <div className="box-between text-sm">
         <a
@@ -25,6 +42,16 @@ const Home: NextPage = () => {
       </div>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+
+  return {
+    props: {
+      posts: res.data,
+    },
+  };
 };
 
 export default Home;

@@ -1,11 +1,18 @@
 import Breadcrumb from "components/post/slug/Breadcrumb";
+import Comments from "components/post/slug/Comments";
 import RelatedPosts from "components/post/slug/RelatedPosts";
 import ShareBtns from "components/post/slug/ShareBtns";
 import type { NextPage } from "next";
+import Head from "next/head";
 
 const DetailPost: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>Judul Post | Blognya Angga</title>
+        <meta name="description" content="Content post-nya" />
+      </Head>
+
       <Breadcrumb />
 
       {/* title */}
@@ -15,8 +22,15 @@ const DetailPost: NextPage = () => {
       </h1>
 
       {/* date */}
-      <p className="text-sm text-gray-400 border-b border-gray-300 pb-2 mb-6">
-        May 13, 2020
+      <p className="text-sm border-b border-gray-300 pb-2 mb-6">
+        <a
+          href="#"
+          className="text-blue-500 hover:text-red-500 hover:underline mr-2"
+        >
+          Angga
+        </a>
+
+        <span className="text-gray-400">| May 13, 2020</span>
       </p>
 
       {/* content */}
@@ -41,6 +55,9 @@ const DetailPost: NextPage = () => {
 
       {/* related posts */}
       <RelatedPosts />
+
+      {/* comments */}
+      <Comments />
     </>
   );
 };

@@ -1,6 +1,12 @@
+import limitChar from "helpers/limitChar";
 import Link from "next/link";
+import { PostType } from "pages/index";
 
-const Post = () => {
+type PostPropType = {
+  post: PostType;
+};
+
+const Post = ({ post }: PostPropType) => {
   return (
     <div className="box-equal gap-x-4 mb-8">
       {/* img */}
@@ -19,17 +25,14 @@ const Post = () => {
         </small>
 
         {/* title (link) */}
-        <Link href="/post/post-pertama">
+        <Link href={"/post/" + post.id}>
           <a className="text-xl font-semibold block my-2 hover:text-blue-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing
+            {limitChar(post.title, 40)}
           </a>
         </Link>
 
         {/* desc */}
-        <p className="text-gray-500 text-sm">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos
-          nesciunt magnam asperiores magni cumque nostrum?
-        </p>
+        <p className="text-gray-500 text-sm">{limitChar(post.body, 100)}</p>
       </div>
     </div>
   );
