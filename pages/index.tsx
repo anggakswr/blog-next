@@ -21,7 +21,7 @@ const Home: NextPage<HomePropType> = ({ posts }) => {
         <meta name="description" content="Isinya tentang Angga" />
       </Head>
 
-      {posts.map((post: PostType) => (
+      {posts.map((post) => (
         <Post key={"post-in-index-" + post.id} post={post} />
       ))}
 
@@ -51,6 +51,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       posts: res.data,
     },
+    revalidate: 10,
   };
 };
 
