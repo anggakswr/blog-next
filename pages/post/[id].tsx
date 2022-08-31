@@ -3,15 +3,22 @@ import Breadcrumb from "components/post/slug/Breadcrumb";
 import Comments from "components/post/slug/Comments";
 import RelatedPosts from "components/post/slug/RelatedPosts";
 import ShareBtns from "components/post/slug/ShareBtns";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { PostType } from "pages";
 
-type DetailPostPropType = {
-  post: PostType;
+export type Comment = {
+  id: number;
+  email: string;
+  body: string;
 };
 
-const DetailPost: NextPage<DetailPostPropType> = ({ post }) => {
+type DetailPostPropType = {
+  post: PostType;
+  comments: Comment[];
+};
+
+const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
   return (
     <>
       <Head>
@@ -49,31 +56,33 @@ const DetailPost: NextPage<DetailPostPropType> = ({ post }) => {
       <RelatedPosts />
 
       {/* comments */}
-      <Comments />
+      <Comments comments={comments} />
     </>
   );
 };
 
-export async function getStaticPaths() {
-  const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await axios.get("/posts");
   const paths = res.data.map((post: PostType) => {
     return { params: { id: `${post.id}` } };
   });
 
   return {
     paths,
-    fallback: "blocking", // can also be true or 'blocking'
+    fallback: "blocking",
   };
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await axios.get(
-    "https://jsonplaceholder.typicode.com/posts/" + params?.id
-  );
+  const [post, comments] = await Promise.all([
+    axios.get("/posts/" + params?.id),
+    axios.get(`/posts/${params?.id}/comments`),
+  ]);
 
   return {
     props: {
-      post: res.data,
+      post: post.data,
+      comments: comments.data,
     },
     revalidate: 10,
   };

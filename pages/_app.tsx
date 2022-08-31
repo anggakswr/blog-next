@@ -5,6 +5,9 @@ import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
 import BlueBox from "components/BlueBox";
 import Head from "next/head";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const currentYear = new Date().getFullYear();

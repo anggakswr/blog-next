@@ -1,6 +1,11 @@
+import { Comment } from "pages/post/[id]";
 import { FaUser } from "react-icons/fa";
 
-const Comment = () => {
+type CommentPropType = {
+  comment: Comment;
+};
+
+const Comment = ({ comment }: CommentPropType) => {
   return (
     <div className="flex gap-x-4 mb-8">
       {/* profile pic */}
@@ -10,10 +15,13 @@ const Comment = () => {
 
       <div className="text-sm">
         {/* username */}
-        <p className="font-bold">Angga</p>
+        <p className="font-bold">{comment.email}</p>
 
         {/* comment */}
-        <p>komentarnya angga</p>
+        <p
+          dangerouslySetInnerHTML={{ __html: comment.body }}
+          className="whitespace-pre"
+        />
 
         {/* btns */}
         <div className="flex gap-x-4 mt-4">

@@ -45,7 +45,7 @@ const Home: NextPage<HomePropType> = ({ posts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+  const res = await axios.get("/posts");
 
   return {
     props: {
