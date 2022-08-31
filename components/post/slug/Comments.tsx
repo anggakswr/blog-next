@@ -1,4 +1,4 @@
-import { Comment as CommentType } from "pages/post/[id]";
+import { CommentType } from "pages/post/[id]";
 import Comment from "./comments/Comment";
 
 type CommentsPropType = {

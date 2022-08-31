@@ -1,4 +1,11 @@
-const Sidebar = () => {
+import Link from "next/link";
+import { PostType } from "pages";
+
+type SidebarPropType = {
+  posts: PostType[];
+};
+
+const Sidebar = ({ posts }: SidebarPropType) => {
   return (
     <nav className="w-[350px] min-w-[350px] max-w-[350px] p-4">
       {/* title */}
@@ -29,33 +36,13 @@ const Sidebar = () => {
       </div>
 
       {/* posts */}
-      <a
-        href="#"
-        className="pb-2 border-b border-gray-200 mb-2 hover:text-red-500 hover:underline block"
-      >
-        Lorem ipsum dolor sit, amet consectetur adipisicing
-      </a>
-
-      <a
-        href="#"
-        className="pb-2 border-b border-gray-200 mb-2 hover:text-red-500 hover:underline block"
-      >
-        Lorem ipsum dolor sit, amet consectetur adipisicing
-      </a>
-
-      <a
-        href="#"
-        className="pb-2 border-b border-gray-200 mb-2 hover:text-red-500 hover:underline block"
-      >
-        Lorem ipsum dolor sit, amet consectetur adipisicing
-      </a>
-
-      <a
-        href="#"
-        className="pb-2 border-b border-gray-200 mb-2 hover:text-red-500 hover:underline block"
-      >
-        Lorem ipsum dolor sit, amet consectetur adipisicing
-      </a>
+      {posts.map((post) => (
+        <Link key={"sidebar-post-" + post.id} href={"/post/" + post.id}>
+          <a className="pb-2 border-b border-gray-200 mb-2 hover:text-red-500 hover:underline block">
+            {post.title}
+          </a>
+        </Link>
+      ))}
 
       {/* title */}
       <div className="box-equal gap-x-2 mt-8 mb-4">
@@ -64,26 +51,15 @@ const Sidebar = () => {
         <span className="font-semibold">CATEGORIES</span>
       </div>
 
-      <a
-        href="#"
-        className="inline-block mr-2 text-sm bg-gray-200 hover:underline p-1 text-gray-700"
-      >
-        Text
-      </a>
-
-      <a
-        href="#"
-        className="inline-block mr-2 text-sm bg-gray-200 hover:underline p-1 text-gray-700"
-      >
-        Image
-      </a>
-
-      <a
-        href="#"
-        className="inline-block mr-2 text-sm bg-gray-200 hover:underline p-1 text-gray-700"
-      >
-        Video
-      </a>
+      {["Text", "Image", "Video"].map((cat) => (
+        <a
+          key={"cat-" + cat}
+          href="#"
+          className="inline-block mr-2 text-sm bg-gray-200 hover:underline p-1 text-gray-700"
+        >
+          {cat}
+        </a>
+      ))}
     </nav>
   );
 };

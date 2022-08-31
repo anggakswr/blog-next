@@ -1,8 +1,8 @@
-import { Comment } from "pages/post/[id]";
+import { CommentType } from "pages/post/[id]";
 import { FaUser } from "react-icons/fa";
 
 type CommentPropType = {
-  comment: Comment;
+  comment: CommentType;
 };
 
 const Comment = ({ comment }: CommentPropType) => {

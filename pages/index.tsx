@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      posts: res.data,
+      posts: res.data.slice(0, 10),
     },
     revalidate: 10,
   };

@@ -7,7 +7,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { PostType } from "pages";
 
-export type Comment = {
+export type CommentType = {
   id: number;
   email: string;
   body: string;
@@ -15,7 +15,7 @@ export type Comment = {
 
 type DetailPostPropType = {
   post: PostType;
-  comments: Comment[];
+  comments: CommentType[];
 };
 
 const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
@@ -26,7 +26,7 @@ const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
         <meta name="description" content={post.body} />
       </Head>
 
-      <Breadcrumb />
+      <Breadcrumb title={post.title} />
 
       {/* title */}
       <h1 className="text-2xl font-bold my-4">{post.title}</h1>
@@ -63,7 +63,7 @@ const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await axios.get("/posts");
-  const paths = res.data.map((post: PostType) => {
+  const paths = res.data.slice(0, 10).map((post: PostType) => {
     return { params: { id: `${post.id}` } };
   });
 

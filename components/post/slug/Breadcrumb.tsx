@@ -1,6 +1,11 @@
+import limitChar from "helpers/limitChar";
 import Link from "next/link";
 
-const Breadcrumb = () => {
+type BreadcrumbPropType = {
+  title: string;
+};
+
+const Breadcrumb = ({ title }: BreadcrumbPropType) => {
   return (
     <nav className="box-equal gap-x-2 text-sm text-gray-500">
       <Link href="/">
@@ -15,7 +20,7 @@ const Breadcrumb = () => {
 
       <span>&rsaquo;</span>
 
-      <p>Judul Post</p>
+      <p>{limitChar(title, 20)}</p>
     </nav>
   );
 };
