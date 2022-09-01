@@ -1,7 +1,8 @@
 import axios from "axios";
 import Post from "components/index/Post";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 
 export type PostType = {
   id: number;
@@ -11,9 +12,10 @@ export type PostType = {
 
 type HomePropType = {
   posts: PostType[];
+  nextPage: number;
 };
 
-const Home: NextPage<HomePropType> = ({ posts }) => {
+const Home: NextPage<HomePropType> = ({ posts, nextPage }) => {
   return (
     <>
       <Head>
@@ -25,33 +27,37 @@ const Home: NextPage<HomePropType> = ({ posts }) => {
         <Post key={"post-in-index-" + post.id} post={post} />
       ))}
 
+      {/* pagination */}
       <div className="box-between text-sm">
-        <a
-          href="#"
-          className="text-blue-500 hover:underline hover:text-red-500"
-        >
-          Home
-        </a>
+        <Link href="/">
+          <a className="text-blue-500 hover:underline hover:text-red-500">
+            Home
+          </a>
+        </Link>
 
-        <a
-          href="#"
-          className="text-blue-500 hover:underline hover:text-red-500"
-        >
-          Older Posts
-        </a>
+        <Link href={{ pathname: "/", query: { page: nextPage } }}>
+          <a className="text-blue-500 hover:underline hover:text-red-500">
+            Older Posts
+          </a>
+        </Link>
       </div>
     </>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get("/posts");
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { page } = query;
+  const res = await axios.get("/posts", {
+    params: {
+      page,
+    },
+  });
 
   return {
     props: {
       posts: res.data.slice(0, 10),
+      nextPage: page ? parseInt(page as string) + 1 : 2,
     },
-    revalidate: 10,
   };
 };
 

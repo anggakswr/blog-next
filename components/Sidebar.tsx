@@ -53,7 +53,7 @@ const Sidebar = ({ posts }: SidebarPropType) => {
 
       {["Text", "Image", "Video"].map((cat) => (
         <a
-          key={"cat-" + cat}
+          key={"sidebar-cat-" + cat}
           href="#"
           className="inline-block mr-2 text-sm bg-gray-200 hover:underline p-1 text-gray-700"
         >

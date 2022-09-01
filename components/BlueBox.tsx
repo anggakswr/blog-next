@@ -23,26 +23,15 @@ const BlueBox = ({ posts }: BlueBoxPropType) => {
       <div>
         <p className="font-semibold mb-4">CATEGORIES</p>
 
-        <a
-          href="#"
-          className="pb-2 border-b border-blue-600 mb-2 hover:text-gray-200 block text-sm"
-        >
-          Text
-        </a>
-
-        <a
-          href="#"
-          className="pb-2 border-b border-blue-600 mb-2 hover:text-gray-200 block text-sm"
-        >
-          Image
-        </a>
-
-        <a
-          href="#"
-          className="pb-2 border-b border-blue-600 mb-2 hover:text-gray-200 block text-sm"
-        >
-          Video
-        </a>
+        {["Text", "Image", "Video"].map((cat) => (
+          <a
+            key={"bluebox-cat-" + cat}
+            href="#"
+            className="pb-2 border-b border-blue-600 mb-2 hover:text-gray-200 block text-sm"
+          >
+            {cat}
+          </a>
+        ))}
       </div>
     </nav>
   );

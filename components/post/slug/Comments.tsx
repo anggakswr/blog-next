@@ -8,7 +8,7 @@ type CommentsPropType = {
 const Comments = ({ comments }: CommentsPropType) => {
   return (
     <section>
-      <h2 className="mb-8 font-bold">7 Comments:</h2>
+      <h2 className="mb-8 font-bold">{comments.length} Comments:</h2>
 
       {/* comment */}
       {comments.map((comment) => (

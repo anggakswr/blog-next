@@ -38,7 +38,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         {/* sidebar */}
         {error ? (
-          <p className="text-red-500">An error occurred</p>
+          <nav className="w-[350px] min-w-[350px] max-w-[350px] p-4">
+            <p className="text-red-500">An error occurred</p>
+          </nav>
         ) : !data ? (
           <SidebarSkeleton />
         ) : (
@@ -46,8 +48,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         )}
       </main>
 
+      {/* bluebox */}
       {error ? (
-        <p className="text-red-500">An error occurred</p>
+        <nav className="bg-blue-500 text-white p-8">
+          <p className="text-white">An error occurred</p>
+        </nav>
       ) : !data ? (
         <BlueBoxSkeleton />
       ) : (
