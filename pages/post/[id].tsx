@@ -16,9 +16,27 @@ export type CommentType = {
 type DetailPostPropType = {
   post: PostType;
   comments: CommentType[];
+  error: boolean;
 };
 
-const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
+const DetailPost: NextPage<DetailPostPropType> = ({
+  post,
+  comments,
+  error,
+}) => {
+  if (error) {
+    return (
+      <>
+        <Head>
+          <title>Error | Blognya Angga</title>
+          <meta name="description" content="Sorry, an error occurred" />
+        </Head>
+
+        <p className="text-red-500">An error occurred</p>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -62,30 +80,46 @@ const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios.get("/posts");
-  const paths = res.data.slice(0, 10).map((post: PostType) => {
-    return { params: { id: `${post.id}` } };
-  });
+  try {
+    const res = await axios.get("/postsa");
+    const paths = res.data.slice(0, 10).map((post: PostType) => {
+      return { params: { id: `${post.id}` } };
+    });
 
-  return {
-    paths,
-    fallback: "blocking",
-  };
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const [post, comments] = await Promise.all([
-    axios.get("/posts/" + params?.id),
-    axios.get(`/posts/${params?.id}/comments`),
-  ]);
+  try {
+    const [post, comments] = await Promise.all([
+      axios.get("/posts/" + params?.id),
+      axios.get(`/posts/${params?.id}/comments`),
+    ]);
 
-  return {
-    props: {
-      post: post.data,
-      comments: comments.data,
-    },
-    revalidate: 10,
-  };
+    return {
+      props: {
+        post: post.data,
+        comments: comments.data,
+      },
+      revalidate: 10,
+    };
+  } catch {
+    return {
+      props: {
+        error: true,
+      },
+      revalidate: 10,
+    };
+  }
 };
 
 export default DetailPost;

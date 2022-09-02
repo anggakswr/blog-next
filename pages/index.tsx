@@ -13,9 +13,23 @@ export type PostType = {
 type HomePropType = {
   posts: PostType[];
   nextPage: number;
+  error: boolean;
 };
 
-const Home: NextPage<HomePropType> = ({ posts, nextPage }) => {
+const Home: NextPage<HomePropType> = ({ posts, nextPage, error }) => {
+  if (error) {
+    return (
+      <>
+        <Head>
+          <title>Home | Blognya Angga</title>
+          <meta name="description" content="Isinya tentang Angga" />
+        </Head>
+
+        <p className="text-red-500">An error occurred</p>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -46,19 +60,27 @@ const Home: NextPage<HomePropType> = ({ posts, nextPage }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { page } = query;
-  const res = await axios.get("/posts", {
-    params: {
-      page,
-    },
-  });
+  try {
+    const { page } = query;
+    const res = await axios.get("/posts", {
+      params: {
+        page,
+      },
+    });
 
-  return {
-    props: {
-      posts: res.data.slice(0, 10),
-      nextPage: page ? parseInt(page as string) + 1 : 2,
-    },
-  };
+    return {
+      props: {
+        posts: res.data.slice(0, 10),
+        nextPage: page ? parseInt(page as string) + 1 : 2,
+      },
+    };
+  } catch {
+    return {
+      props: {
+        error: true,
+      },
+    };
+  }
 };
 
 export default Home;

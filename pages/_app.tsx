@@ -9,6 +9,9 @@ import Head from "next/head";
 import axios from "axios";
 import useSWR from "swr";
 import SidebarSkeleton from "components/SidebarSkeleton";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import MainPageSkeleton from "components/MainPageSkeleton";
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 
@@ -21,6 +24,24 @@ function MyApp({ Component, pageProps }: AppProps) {
   const currentYear = new Date().getFullYear();
   const { data, error } = useSWR("/posts", fetcher);
 
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  });
+
   return (
     <div className="w-[1024px] mx-auto bg-white">
       <Head>
@@ -32,9 +53,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <main className="flex min-h-screen">
         {/* main content of the page */}
-        <section className="flex-1 border-r border-gray-300 p-4">
-          <Component {...pageProps} />
-        </section>
+        {loading ? (
+          <MainPageSkeleton />
+        ) : (
+          <section className="flex-1 border-r border-gray-300 p-4">
+            <Component {...pageProps} />
+          </section>
+        )}
 
         {/* sidebar */}
         {error ? (
