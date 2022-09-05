@@ -6,28 +6,55 @@ import {
   FaPinterest,
 } from "react-icons/fa";
 
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  WhatsappShareButton,
+  PinterestShareButton,
+} from "next-share";
+
+import { useRouter } from "next/router";
+
 const ShareBtns = () => {
+  const { asPath } = useRouter();
+  const { baseUrl } = process.env;
+  const fullPath = baseUrl + asPath;
+
   return (
     <nav className="my-8 flex gap-x-2">
-      <a href="#" className="inline-block p-2 bg-black">
-        <FaFacebook color="white" />
-      </a>
+      <FacebookShareButton url={fullPath}>
+        <div className="inline-block p-2 bg-black">
+          <FaFacebook color="white" />
+        </div>
+      </FacebookShareButton>
 
-      <a href="#" className="inline-block p-2 bg-black">
-        <FaTwitter color="white" />
-      </a>
+      <TwitterShareButton url={fullPath}>
+        <div className="inline-block p-2 bg-black">
+          <FaTwitter color="white" />
+        </div>
+      </TwitterShareButton>
 
-      <a href="#" className="inline-block p-2 bg-black">
-        <FaLinkedin color="white" />
-      </a>
+      <LinkedinShareButton url={fullPath}>
+        <div className="inline-block p-2 bg-black">
+          <FaLinkedin color="white" />
+        </div>
+      </LinkedinShareButton>
 
-      <a href="#" className="inline-block p-2 bg-black">
-        <FaWhatsapp color="white" />
-      </a>
+      <WhatsappShareButton url={fullPath} separator=":: ">
+        <div className="inline-block p-2 bg-black">
+          <FaWhatsapp color="white" />
+        </div>
+      </WhatsappShareButton>
 
-      <a href="#" className="inline-block p-2 bg-black">
-        <FaPinterest color="white" />
-      </a>
+      <PinterestShareButton
+        url={fullPath}
+        media={"next-share is a social share buttons for your next React apps."}
+      >
+        <div className="inline-block p-2 bg-black">
+          <FaPinterest color="white" />
+        </div>
+      </PinterestShareButton>
     </nav>
   );
 };
