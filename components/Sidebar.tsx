@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { PostType } from "pages";
+import constants from "helpers/constants";
+
+const categories = constants.categories;
 
 type SidebarPropType = {
   posts: PostType[];
@@ -51,7 +54,7 @@ const Sidebar = ({ posts }: SidebarPropType) => {
         <span className="font-semibold">CATEGORIES</span>
       </div>
 
-      {["Text", "Image", "Video"].map((cat) => (
+      {categories.map((cat) => (
         <a
           key={"sidebar-cat-" + cat}
           href="#"

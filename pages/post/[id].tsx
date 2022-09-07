@@ -16,27 +16,9 @@ export type CommentType = {
 type DetailPostPropType = {
   post: PostType;
   comments: CommentType[];
-  error: boolean;
 };
 
-const DetailPost: NextPage<DetailPostPropType> = ({
-  post,
-  comments,
-  error,
-}) => {
-  if (error) {
-    return (
-      <>
-        <Head>
-          <title>Error | Blognya Angga</title>
-          <meta name="description" content="Sorry, an error occurred" />
-        </Head>
-
-        <p className="text-red-500">An error occurred</p>
-      </>
-    );
-  }
-
+const DetailPost: NextPage<DetailPostPropType> = ({ post, comments }) => {
   return (
     <>
       <Head>
@@ -81,7 +63,7 @@ const DetailPost: NextPage<DetailPostPropType> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const res = await axios.get("/postsa");
+    const res = await axios.get("/posts");
     const paths = res.data.slice(0, 10).map((post: PostType) => {
       return { params: { id: `${post.id}` } };
     });
@@ -113,12 +95,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       revalidate: 10,
     };
   } catch {
-    return {
-      props: {
-        error: true,
-      },
-      revalidate: 10,
-    };
+    return { notFound: true };
   }
 };
 

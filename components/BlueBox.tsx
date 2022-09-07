@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { PostType } from "pages";
+import constants from "helpers/constants";
+
+const categories = constants.categories;
 
 type BlueBoxPropType = {
   posts: PostType[];
@@ -23,7 +26,7 @@ const BlueBox = ({ posts }: BlueBoxPropType) => {
       <div>
         <p className="font-semibold mb-4">CATEGORIES</p>
 
-        {["Text", "Image", "Video"].map((cat) => (
+        {categories.map((cat) => (
           <a
             key={"bluebox-cat-" + cat}
             href="#"

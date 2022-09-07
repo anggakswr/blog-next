@@ -13,23 +13,9 @@ export type PostType = {
 type HomePropType = {
   posts: PostType[];
   nextPage: number;
-  error: boolean;
 };
 
-const Home: NextPage<HomePropType> = ({ posts, nextPage, error }) => {
-  if (error) {
-    return (
-      <>
-        <Head>
-          <title>Home | Blognya Angga</title>
-          <meta name="description" content="Isinya tentang Angga" />
-        </Head>
-
-        <p className="text-red-500">An error occurred</p>
-      </>
-    );
-  }
-
+const Home: NextPage<HomePropType> = ({ posts, nextPage }) => {
   return (
     <>
       <Head>
@@ -76,9 +62,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
   } catch {
     return {
-      props: {
-        error: true,
+      redirect: {
+        permanent: false,
+        destination: "/404",
       },
+      props: {},
     };
   }
 };

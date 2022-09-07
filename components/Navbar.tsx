@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import constants from "helpers/constants";
+
+const categories = constants.categories;
 
 const Navbar = () => {
   const { pathname } = useRouter();
@@ -13,17 +16,15 @@ const Navbar = () => {
           <a className={pathname === "/" ? active : notActive}>Home</a>
         </Link>
 
-        <a href="#" className="p-4 hover:bg-black hover:text-white">
-          Text
-        </a>
-
-        <a href="#" className="p-4 hover:bg-black hover:text-white">
-          Image
-        </a>
-
-        <a href="#" className="p-4 hover:bg-black hover:text-white">
-          Video
-        </a>
+        {categories.map((cat) => (
+          <a
+            key={"navbar-cat-" + cat}
+            href="#"
+            className="p-4 hover:bg-black hover:text-white"
+          >
+            {cat}
+          </a>
+        ))}
       </div>
 
       <form className="p-2" onSubmit={(e) => e.preventDefault()}>
