@@ -21,3 +21,21 @@ body {
 input {
   @apply focus:outline-none;
 }
+
+/* admin / dashboard / cms */
+.admin-btn {
+  @apply py-2 px-4 text-white bg-slate-700 rounded-md text-sm;
+}
+
+.admin-delete-btn {
+  @apply py-2 px-4 text-white bg-red-500 rounded-md text-sm;
+}
+
+.admin-btn:hover,
+.admin-delete-btn:hover {
+  @apply opacity-50;
+}
+
+.admin-input {
+  @apply border rounded-md p-2 text-sm;
+}

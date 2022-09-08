@@ -17,10 +17,10 @@ const Admin = ({ children }: AdminPropType) => {
       {/* header */}
       <Header />
 
-      <main className="flex min-h-screen">
+      <main className="flex min-h-screen mt-[56px]">
         <Sidebar />
 
-        <section className="flex-1 bg-white">
+        <section className="flex-1 bg-white p-6">
           {/* main content of the page */}
           {children}
         </section>

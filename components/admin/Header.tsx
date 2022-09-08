@@ -1,6 +1,6 @@
 import upperCaseFirstLetter from "helpers/upperCaseFirstLetter";
 import { useRouter } from "next/router";
-import { FaFolder } from "react-icons/fa";
+import { FaChevronDown, FaFolder, FaUser } from "react-icons/fa";
 
 const Header = () => {
   // /admin/post /admin/category
@@ -18,7 +18,7 @@ const Header = () => {
   // const title = upperCaseFirstLetter(pathTruncated);
 
   return (
-    <header className="bg-blue-500 text-white flex">
+    <header className="bg-blue-500 text-white flex fixed top-0 inset-x-0">
       {/* sidebar title */}
       <p className="w-[300px] bg-blue-700 p-4 box-equal gap-x-4 font-bold">
         <FaFolder color="white" />
@@ -31,7 +31,11 @@ const Header = () => {
         <h1>{arrJoined}</h1>
 
         {/* icon user */}
-        <p>icon user</p>
+        <button className="box-equal gap-x-4">
+          <FaUser color="white" />
+          Angga
+          <FaChevronDown color="white" size={10} />
+        </button>
       </nav>
     </header>
   );
