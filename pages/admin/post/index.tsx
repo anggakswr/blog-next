@@ -3,7 +3,6 @@ import Header from "components/admin/crud/Header";
 import TblRowSkeleton from "components/admin/post/TblRowSkeleton";
 import limitChar from "helpers/limitChar";
 import { NextPage } from "next";
-import Head from "next/head";
 import Link from "next/link";
 import { PostType } from "pages";
 import { FaSort } from "react-icons/fa";
@@ -19,11 +18,6 @@ const AdminPost: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Post | Admin | Blognya Angga</title>
-        <meta name="description" content="CRUD Post" />
-      </Head>
-
       <Header addBtnUrl={"/admin/post/add"} />
 
       {/* tbl header */}
