@@ -1,21 +1,11 @@
-import upperCaseFirstLetter from "helpers/upperCaseFirstLetter";
+import pathToTitle from "helpers/pathToTitle";
 import { useRouter } from "next/router";
 import { FaChevronDown, FaFolder, FaUser } from "react-icons/fa";
 
 const Header = () => {
   // /admin/post /admin/category
   const { asPath } = useRouter();
-
-  // post category angga-keren
-  const pathTruncated = asPath.replace("/admin/", "");
-
-  // ['angga', 'keren']
-  const pathArr = pathTruncated.split("-");
-
-  // ['Angga', 'Keren'] -> Angga Keren
-  const arrJoined = pathArr.map((str) => upperCaseFirstLetter(str)).join(" ");
-
-  // const title = upperCaseFirstLetter(pathTruncated);
+  const title = pathToTitle(asPath);
 
   return (
     <header className="bg-blue-500 text-white flex fixed top-0 inset-x-0">
@@ -28,7 +18,7 @@ const Header = () => {
       {/* page header */}
       <nav className="p-4 box-between flex-1">
         {/* page title */}
-        <h1>{arrJoined}</h1>
+        <h1 className="text-sm">{title}</h1>
 
         {/* icon user */}
         <button className="box-equal gap-x-4">
