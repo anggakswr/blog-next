@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-type HeaderPropType = {
-  addBtnUrl: string;
-};
+const Header = () => {
+  // "/admin/post"
+  const { asPath } = useRouter();
 
-const Header = ({ addBtnUrl }: HeaderPropType) => {
+  // "/admin/post/add"
+  const addBtnUrl = asPath + "/add";
+
   return (
     <div className="box-between">
       {/* add btn */}

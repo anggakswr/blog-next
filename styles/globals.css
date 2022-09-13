@@ -18,7 +18,8 @@ body {
   @apply flex items-center justify-between;
 }
 
-input {
+input,
+textarea {
   @apply focus:outline-none;
 }
 

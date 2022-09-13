@@ -18,7 +18,7 @@ const AdminPost: NextPage = () => {
 
   return (
     <>
-      <Header addBtnUrl={"/admin/post/add"} />
+      <Header />
 
       {/* tbl header */}
       <div className="grid grid-cols-3 border-y p-4 text-sm mt-8 font-bold">
