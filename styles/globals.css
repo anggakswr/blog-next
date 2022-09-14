@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  @apply duration-150;
+}
+
 body {
   @apply bg-black scroll-smooth;
 }
@@ -33,10 +37,24 @@ textarea {
 }
 
 .admin-btn:hover,
+.admin-btn:disabled,
 .admin-delete-btn:hover {
   @apply opacity-50;
 }
 
+.admin-btn:disabled,
+.admin-input:disabled {
+  @apply cursor-not-allowed;
+}
+
+.admin-input:disabled {
+  @apply bg-gray-300;
+}
+
 .admin-input {
   @apply border rounded-md p-2 text-sm;
+}
+
+.admin-layout > * {
+  @apply text-sm;
 }
