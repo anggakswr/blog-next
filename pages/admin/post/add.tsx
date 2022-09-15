@@ -1,16 +1,15 @@
-import TextArea from "components/admin/TextArea";
-import TextField from "components/admin/TextField";
+import TextArea from "components/admin/form/TextArea";
+import TextField from "components/admin/form/TextField";
 import { NextPage } from "next";
 import { useState } from "react";
 import React from "react";
 import axios from "axios";
 import Router from "next/router";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment, currentCount } from "slices/counterSlice";
+import { useDispatch } from "react-redux";
+import { setSnackbar } from "slices/snackbarSlice";
 
 const AdminAddPost: NextPage = () => {
   // global state
-  const count = useSelector(currentCount);
   const dispatch = useDispatch();
 
   // local state
@@ -39,6 +38,7 @@ const AdminAddPost: NextPage = () => {
 
     try {
       await axios.post("/posts", payload);
+      dispatch(setSnackbar("Data added"));
       Router.push("/admin/post");
     } catch {
       setError("Sorry, an error occurred");
@@ -49,16 +49,6 @@ const AdminAddPost: NextPage = () => {
 
   return (
     <form onSubmit={submit}>
-      <p>Count {count}</p>
-
-      <button type="button" onClick={() => dispatch(increment())}>
-        increment
-      </button>
-
-      <button type="button" onClick={() => dispatch(decrement())}>
-        decrement
-      </button>
-
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
       <TextField

@@ -5,8 +5,10 @@ import limitChar from "helpers/limitChar";
 import { NextPage } from "next";
 import Link from "next/link";
 import { PostType } from "pages";
+import { useState } from "react";
 import { FaSort } from "react-icons/fa";
 import useSWR from "swr";
+import DeletePopup from "./index/DeletePopup";
 
 const fetcher = async () => {
   const res = await axios.get("/posts");
@@ -15,6 +17,7 @@ const fetcher = async () => {
 
 const AdminPost: NextPage = () => {
   const { data, error } = useSWR("/posts", fetcher);
+  const [postId, setPostId] = useState<null | number>(null);
 
   return (
     <>
@@ -51,11 +54,20 @@ const AdminPost: NextPage = () => {
               <Link href={"/admin/post/edit/" + post.id}>
                 <a className="admin-btn">Edit</a>
               </Link>
-              <button className="admin-delete-btn">Delete</button>
+
+              <button
+                className="admin-delete-btn"
+                onClick={() => setPostId(post.id)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))
       )}
+
+      {/* delete popup */}
+      {postId && <DeletePopup postId={postId} setPostId={setPostId} />}
     </>
   );
 };
