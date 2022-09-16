@@ -38,16 +38,19 @@ textarea {
 
 .admin-btn:hover,
 .admin-btn:disabled,
+.admin-delete-btn:disabled,
 .admin-delete-btn:hover {
   @apply opacity-50;
 }
 
 .admin-btn:disabled,
-.admin-input:disabled {
+.admin-input:disabled,
+.admin-delete-btn:disabled {
   @apply cursor-not-allowed;
 }
 
-.admin-input:disabled {
+.admin-input:disabled,
+.admin-delete-btn:disabled {
   @apply bg-gray-300;
 }
 

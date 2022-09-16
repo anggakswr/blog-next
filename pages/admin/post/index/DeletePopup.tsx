@@ -1,9 +1,35 @@
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSnackbar } from "slices/snackbarSlice";
+
 type DeletePopupPropType = {
   postId: number;
   setPostId: (postId: number | null) => void;
 };
 
 const DeletePopup = ({ postId, setPostId }: DeletePopupPropType) => {
+  // global state
+  const dispatch = useDispatch();
+
+  // local state
+  const [loading, setLoading] = useState(false);
+
+  const submit = async () => {
+    setLoading(true);
+
+    try {
+      await axios.delete("/postsa/" + postId);
+      dispatch(setSnackbar({ text: "Data deleted", type: "success" }));
+      setPostId(null);
+    } catch {
+      dispatch(setSnackbar({ text: "An error occurred", type: "error" }));
+      // setError("Sorry, an error occurred");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="fixed inset-0 box-center">
       {/* content */}
@@ -18,11 +44,21 @@ const DeletePopup = ({ postId, setPostId }: DeletePopupPropType) => {
 
         {/* btns */}
         <div className="flex justify-end gap-x-4">
-          <button className="admin-btn" onClick={() => setPostId(null)}>
+          <button
+            className="admin-btn"
+            onClick={() => setPostId(null)}
+            disabled={loading}
+          >
             Cancel
           </button>
 
-          <button className="admin-delete-btn">Confirm</button>
+          <button
+            className="admin-delete-btn"
+            onClick={submit}
+            disabled={loading}
+          >
+            Confirm
+          </button>
         </div>
       </div>
 

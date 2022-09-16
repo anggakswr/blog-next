@@ -67,7 +67,7 @@ const AdminPost: NextPage = () => {
       )}
 
       {/* delete popup */}
-      {postId && <DeletePopup postId={postId} setPostId={setPostId} />}
+      {postId ? <DeletePopup postId={postId} setPostId={setPostId} /> : null}
     </>
   );
 };
