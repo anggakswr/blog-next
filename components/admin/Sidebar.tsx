@@ -17,13 +17,13 @@ const links = [
 ];
 
 const Sidebar = () => {
-  const { asPath } = useRouter();
+  const { route } = useRouter();
 
   const renderLinkClass = (url: string) => {
     const defaultClass =
       "px-8 py-2 hover:bg-white hover:text-black box-equal gap-x-4";
 
-    if (url === asPath) {
+    if (url === route) {
       return "px-8 py-2 bg-white text-black box-equal gap-x-4";
     } else {
       return defaultClass;

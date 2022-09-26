@@ -4,8 +4,8 @@ import { FaChevronDown, FaFolder, FaUser } from "react-icons/fa";
 
 const Header = () => {
   // /admin/post /admin/category
-  const { asPath } = useRouter();
-  const title = pathToTitle(asPath);
+  const { route } = useRouter();
+  const title = pathToTitle(route);
 
   return (
     <header className="bg-blue-500 text-white flex fixed top-0 inset-x-0">

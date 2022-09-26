@@ -17,9 +17,9 @@ import {
 import { useRouter } from "next/router";
 
 const ShareBtns = () => {
-  const { asPath } = useRouter();
+  const { route } = useRouter();
   const { baseUrl } = process.env;
-  const fullPath = baseUrl + asPath;
+  const fullPath = baseUrl + route;
 
   return (
     <nav className="my-8 flex gap-x-2">

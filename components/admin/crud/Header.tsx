@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 
 const Header = () => {
   // "/admin/post"
-  const { asPath } = useRouter();
+  const { route } = useRouter();
 
   // "/admin/post/add"
-  const addBtnUrl = asPath + "/add";
+  const addBtnUrl = route + "/add";
 
   return (
     <div className="box-between">

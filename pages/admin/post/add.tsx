@@ -7,56 +7,97 @@ import axios from "axios";
 import Router from "next/router";
 import { useDispatch } from "react-redux";
 import { setSnackbar } from "slices/snackbarSlice";
-import useSWR from "swr";
 
 type AdminAddPostPropType = {
   postId: string | null;
+};
+
+type FieldErrorsType = {
+  title?: string[];
+  body?: string[];
 };
 
 const AdminAddPost: NextPage<AdminAddPostPropType> = ({ postId }) => {
   // global state
   const dispatch = useDispatch();
 
-  // local state
+  // field
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+
+  // err msgs
+  const [fieldErrors, setFieldErrors] = useState<FieldErrorsType>({});
+
+  // form
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    const { value } = e.target;
+
+    setTitle(value);
+
+    if (value) {
+      setFieldErrors((prevState) => {
+        return {
+          ...prevState,
+          title: [],
+        };
+      });
+    }
   };
 
   const changeBody = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setBody(e.target.value);
+    const { value } = e.target;
+
+    setBody(value);
+
+    if (value) {
+      setFieldErrors((prevState) => {
+        return {
+          ...prevState,
+          body: [],
+        };
+      });
+    }
   };
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const payload = {
-      title,
-      body,
-    };
-
     setLoading(true);
+    setError("");
+    setFieldErrors({});
 
-    if (postId) {
-      try {
-        await axios.put("/posts/" + postId, payload);
-        dispatch(setSnackbar({ text: "Data edited", type: "success" }));
-        Router.push("/admin/post");
-      } catch {
-        setError("Sorry, an error occurred");
+    if (title && body) {
+      const payload = {
+        title,
+        body,
+      };
+
+      if (postId) {
+        try {
+          await axios.put("/posts/" + postId, payload);
+          dispatch(setSnackbar({ text: "Data edited", type: "success" }));
+          Router.push("/admin/post");
+        } catch {
+          setError("Sorry, an error occurred");
+        }
+      } else {
+        try {
+          await axios.post("/posts", payload);
+          dispatch(setSnackbar({ text: "Data added", type: "success" }));
+          Router.push("/admin/post");
+        } catch {
+          setError("Sorry, an error occurred");
+        }
       }
     } else {
-      try {
-        await axios.post("/posts", payload);
-        dispatch(setSnackbar({ text: "Data added", type: "success" }));
-        Router.push("/admin/post");
-      } catch {
-        setError("Sorry, an error occurred");
-      }
+      let errors: FieldErrorsType = {};
+
+      if (!title) errors.title = ["Field is required"];
+      if (!body) errors.body = ["Field is required"];
+
+      setFieldErrors(errors);
     }
 
     setLoading(false);
@@ -93,6 +134,7 @@ const AdminAddPost: NextPage<AdminAddPostPropType> = ({ postId }) => {
         value={title}
         onChange={changeTitle}
         disabled={loading}
+        errors={fieldErrors?.title || []}
       />
 
       <TextArea
@@ -100,6 +142,7 @@ const AdminAddPost: NextPage<AdminAddPostPropType> = ({ postId }) => {
         value={body}
         onChange={changeBody}
         disabled={loading}
+        errors={fieldErrors?.body || []}
       />
 
       <button className="admin-btn" disabled={loading}>

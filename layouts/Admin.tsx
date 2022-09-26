@@ -12,8 +12,8 @@ type AdminPropType = {
 
 const Admin = ({ children }: AdminPropType) => {
   // /admin/post/add
-  const { asPath } = useRouter();
-  const title = pathToTitle(asPath);
+  const { route } = useRouter();
+  const title = pathToTitle(route);
 
   return (
     <div className="admin-layout">
