@@ -42,7 +42,7 @@ const AdminPost: NextPage = () => {
         <TblRowSkeleton />
       ) : (
         // tbl rows
-        data.map((post: PostType, index) => (
+        data.map((post: PostType, index: number) => (
           <div
             key={"admin-post-" + post.id}
             className={`grid grid-cols-3 border-y p-4 text-sm items-center ${
