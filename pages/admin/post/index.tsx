@@ -42,12 +42,19 @@ const AdminPost: NextPage = () => {
         <TblRowSkeleton />
       ) : (
         // tbl rows
-        data.map((post: PostType) => (
+        data.map((post: PostType, index) => (
           <div
             key={"admin-post-" + post.id}
-            className="grid grid-cols-3 border-y p-4 text-sm items-center"
+            className={`grid grid-cols-3 border-y p-4 text-sm items-center ${
+              index % 2 === 0 ? "bg-gray-100" : ""
+            }`}
           >
-            <p>{limitChar(post.title, 20)}</p>
+            <Link href={"/post/" + post.id}>
+              <a className="underline hover:text-red-500">
+                {limitChar(post.title, 20)}
+              </a>
+            </Link>
+
             <p>{limitChar(post.body, 20)}</p>
 
             <div className="box-equal gap-x-2">

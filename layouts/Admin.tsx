@@ -11,9 +11,15 @@ type AdminPropType = {
 };
 
 const Admin = ({ children }: AdminPropType) => {
-  // /admin/post/add
-  const { route } = useRouter();
-  const title = pathToTitle(route);
+  // /admin/post/add or /admin/post?page=1
+  const { asPath } = useRouter();
+  let title = pathToTitle(asPath);
+
+  if (asPath.includes("?")) {
+    // ['/admin/post' 'page=1']
+    const arr = asPath.split("?");
+    title = pathToTitle(arr[0]);
+  }
 
   return (
     <div className="admin-layout">

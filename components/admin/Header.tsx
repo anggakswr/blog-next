@@ -3,9 +3,15 @@ import { useRouter } from "next/router";
 import { FaChevronDown, FaFolder, FaUser } from "react-icons/fa";
 
 const Header = () => {
-  // /admin/post /admin/category
-  const { route } = useRouter();
-  const title = pathToTitle(route);
+  // /admin/post/add or /admin/post?page=1
+  const { asPath } = useRouter();
+  let title = pathToTitle(asPath);
+
+  if (asPath.includes("?")) {
+    // ['/admin/post' 'page=1']
+    const arr = asPath.split("?");
+    title = pathToTitle(arr[0]);
+  }
 
   return (
     <header className="bg-blue-500 text-white flex fixed top-0 inset-x-0">

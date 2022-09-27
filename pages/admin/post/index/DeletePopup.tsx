@@ -19,12 +19,11 @@ const DeletePopup = ({ postId, setPostId }: DeletePopupPropType) => {
     setLoading(true);
 
     try {
-      await axios.delete("/postsa/" + postId);
+      await axios.delete("/posts/" + postId);
       dispatch(setSnackbar({ text: "Data deleted", type: "success" }));
       setPostId(null);
     } catch {
       dispatch(setSnackbar({ text: "An error occurred", type: "error" }));
-      // setError("Sorry, an error occurred");
     }
 
     setLoading(false);
