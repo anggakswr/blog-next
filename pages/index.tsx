@@ -16,6 +16,16 @@ type HomePropType = {
 };
 
 const Home: NextPage<HomePropType> = ({ posts, nextPage }) => {
+  const vShare = () => {
+    void (async () => {
+      await navigator.share({
+        url: "https://primaku.page.link/ParenthoodInstitute",
+        text: "Parenthood Institute",
+        title: "Parenthood Institute",
+      });
+    })();
+  };
+
   return (
     <>
       <Head>
@@ -26,6 +36,8 @@ const Home: NextPage<HomePropType> = ({ posts, nextPage }) => {
       {posts.map((post) => (
         <Post key={"post-in-index-" + post.id} post={post} />
       ))}
+
+      <div onClick={vShare}>asd</div>
 
       {/* pagination */}
       <div className="box-between text-sm">
